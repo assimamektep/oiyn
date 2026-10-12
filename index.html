@@ -1,0 +1,588 @@
+<!DOCTYPE html><html lang="kk"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#a8d8ff">
+    <meta name="format-detection" content="telephone=no">
+    <title>Математика ойыны</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="images/character.png">
+    <link rel="preload" as="image" href="images/icon_home.png">
+    <link rel="preload" as="image" href="images/icon_tarik.png">
+    <link rel="preload" as="image" href="images/icon_panjat.png">
+    <link rel="preload" as="image" href="images/icon_balap_karung.png">
+    <link rel="preload" as="image" href="images/tiang.png">
+    <link rel="preload" as="image" href="images/standleft.png">
+    <link rel="preload" as="image" href="images/standright.png">
+    <link rel="preload" as="image" href="images/climbleft.png">
+    <link rel="preload" as="image" href="images/climbright.png">
+    <link rel="preload" as="image" href="images/track.png">
+    <link rel="preload" as="image" href="images/blue_stand.png">
+    <link rel="preload" as="image" href="images/blue_hop.png">
+    <link rel="preload" as="image" href="images/red_stand.png">
+    <link rel="preload" as="image" href="images/red_hop.png">
+</head>
+<body>
+    <!-- Fullscreen Button -->
+    <button id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullscreen()" title="Толық экран режимі">
+        <svg class="fullscreen-icon expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        </svg>
+        <svg class="fullscreen-icon collapse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+        </svg>
+    </button>
+
+    <!-- Home Button -->
+    <button id="homeBtn" class="home-btn" onclick="backToGameTypeMenu()" title="Басты мәзір">
+        <img src="images/icon_home.png" alt="Home" class="home-icon">
+    </button>
+
+    <!-- Menu Game Mode Selection (Tarik Tambang / Panjat Pinang) -->
+    <div id="gameTypeMenu" class="menu-screen">
+        <div class="menu-container">
+            <h1 class="menu-title">Математика ойыны</h1>
+            <p class="menu-subtitle">Ойын тақырыбын таңдаңыз</p>
+            <div class="menu-buttons">
+                <button class="menu-btn game-type-btn tarik-tambang" onclick="selectGameType('tarik-tambang')">
+                    <img src="images/icon_tarik.png" alt="Арқан тарту" class="menu-icon">
+                    <div class="game-type-text">
+                        <span class="game-type-title">Арқан тарту</span>
+                        <span class="game-type-subtitle">Пак Гуру Салом идеясымен</span>
+                    </div>
+                </button>
+                <button class="menu-btn game-type-btn panjat-pinang" onclick="selectGameType('panjat-pinang')">
+                    <img src="images/icon_panjat.png" alt="Бағанаға өрмелеу" class="menu-icon">
+                    <span>Бағанаға өрмелеу</span>
+                </button>
+                <button class="menu-btn game-type-btn balap-karung" onclick="selectGameType('balap-karung')">
+                    <img src="images/icon_balap_karung.png" alt="Қаппен жарыс" class="menu-icon">
+                    <span>Қаппен жарыс</span>
+                </button>
+            </div>
+        </div>
+        <div class="copyright-footer">
+            <p>© AfifEdu 2025 | <span id="version-indicator">v2.0.0</span></p>
+            <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">Created By Herwin Hamid</p>
+        </div>
+    </div>
+
+    <!-- Menu Math Mode Selection for Tarik Tambang -->
+    <div id="mathModeMenuTarikTambang" class="menu-screen">
+        <div class="menu-container">
+            <h1 class="menu-title">Математикалық арқан тарту</h1>
+            <p class="menu-subtitle">Амал түрін таңдаңыз</p>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="selectMathMode('addition')">
+                    ➕ Қосу
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('subtraction')">
+                    ➖ Азайту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('multiplication')">
+                    ✖️ Көбейту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('division')">
+                    ➗ Бөлу
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Math Mode Selection for Panjat Pinang -->
+    <div id="mathModeMenuPanjatPinang" class="menu-screen">
+        <div class="menu-container">
+            <h1 class="menu-title">Математикалық бағанаға өрмелеу</h1>
+            <p class="menu-subtitle">Амал түрін таңдаңыз</p>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="selectMathMode('addition')">
+                    ➕ Қосу
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('subtraction')">
+                    ➖ Азайту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('multiplication')">
+                    ✖️ Көбейту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('division')">
+                    ➗ Бөлу
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Math Mode Selection for Balap Karung -->
+    <div id="mathModeMenuBalapKarung" class="menu-screen">
+        <div class="menu-container">
+            <h1 class="menu-title">Математикалық қаппен жарыс</h1>
+            <p class="menu-subtitle">Амал түрін таңдаңыз</p>
+            <div class="menu-buttons">
+                <button class="menu-btn" onclick="selectMathMode('addition')">
+                    ➕ Қосу
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('subtraction')">
+                    ➖ Азайту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('multiplication')">
+                    ✖️ Көбейту
+                </button>
+                <button class="menu-btn" onclick="selectMathMode('division')">
+                    ➗ Бөлу
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Level Selection - Addition -->
+    <div id="levelMenuAddition" class="menu-screen">
+        <div class="menu-container compact">
+            <h1 class="menu-title">Қиындық деңгейін таңдаңыз</h1>
+            <p class="menu-subtitle">Режим: Қосу</p>
+            <div class="menu-buttons">
+                <button class="menu-btn level-btn beginner" onclick="selectLevel('beginner')">
+                    <span class="level-icon">⭐</span>
+                    <span class="level-name">Бастаушы</span>
+                    <span class="level-desc">1 таңбалы + 1 таңбалы</span>
+                </button>
+                <button class="menu-btn level-btn amateur" onclick="selectLevel('amateur')">
+                    <span class="level-icon">⭐⭐</span>
+                    <span class="level-name">Әуесқой</span>
+                    <span class="level-desc">1 таңбалы + 2 таңбалы (аралас)</span>
+                </button>
+                <button class="menu-btn level-btn pro" onclick="selectLevel('pro')">
+                    <span class="level-icon">⭐⭐⭐</span>
+                    <span class="level-name">Кәсіпқой</span>
+                    <span class="level-desc">2 таңбалы + 2 таңбалы</span>
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Level Selection - Subtraction -->
+    <div id="levelMenuSubtraction" class="menu-screen">
+        <div class="menu-container compact">
+            <h1 class="menu-title">Қиындық деңгейін таңдаңыз</h1>
+            <p class="menu-subtitle">Режим: Азайту</p>
+            <div class="menu-buttons">
+                <button class="menu-btn level-btn beginner" onclick="selectLevel('beginner')">
+                    <span class="level-icon">⭐</span>
+                    <span class="level-name">Бастаушы</span>
+                    <span class="level-desc">1 таңбалы - 1 таңбалы</span>
+                </button>
+                <button class="menu-btn level-btn amateur" onclick="selectLevel('amateur')">
+                    <span class="level-icon">⭐⭐</span>
+                    <span class="level-name">Әуесқой</span>
+                    <span class="level-desc">2 таңбалы - 1 таңбалы (аралас)</span>
+                </button>
+                <button class="menu-btn level-btn pro" onclick="selectLevel('pro')">
+                    <span class="level-icon">⭐⭐⭐</span>
+                    <span class="level-name">Кәсіпқой</span>
+                    <span class="level-desc">2 таңбалы - 2 таңбалы</span>
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Level Selection - Multiplication -->
+    <div id="levelMenuMultiplication" class="menu-screen">
+        <div class="menu-container compact">
+            <h1 class="menu-title">Қиындық деңгейін таңдаңыз</h1>
+            <p class="menu-subtitle">Режим: Көбейту</p>
+            <div class="menu-buttons">
+                <button class="menu-btn level-btn beginner" onclick="selectLevel('beginner')">
+                    <span class="level-icon">⭐</span>
+                    <span class="level-name">Бастаушы</span>
+                    <span class="level-desc">1 таңбалы × 1 таңбалы</span>
+                </button>
+                <button class="menu-btn level-btn amateur" onclick="selectLevel('amateur')">
+                    <span class="level-icon">⭐⭐</span>
+                    <span class="level-name">Әуесқой</span>
+                    <span class="level-desc">1 таңбалы × 2 таңбалы</span>
+                </button>
+                <button class="menu-btn level-btn pro" onclick="selectLevel('pro')">
+                    <span class="level-icon">⭐⭐⭐</span>
+                    <span class="level-name">Кәсіпқой</span>
+                    <span class="level-desc">2 таңбалы × 2 таңбалы</span>
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Menu Level Selection - Division -->
+    <div id="levelMenuDivision" class="menu-screen">
+        <div class="menu-container compact">
+            <h1 class="menu-title">Қиындық деңгейін таңдаңыз</h1>
+            <p class="menu-subtitle">Режим: Бөлу</p>
+            <div class="menu-buttons">
+                <button class="menu-btn level-btn beginner" onclick="selectLevel('beginner')">
+                    <span class="level-icon">⭐</span>
+                    <span class="level-name">Бастаушы</span>
+                    <span class="level-desc">Бүтін (1-20 ÷ 1-5)</span>
+                </button>
+                <button class="menu-btn level-btn amateur" onclick="selectLevel('amateur')">
+                    <span class="level-icon">⭐⭐</span>
+                    <span class="level-name">Әуесқой</span>
+                    <span class="level-desc">Бүтін (10-99 ÷ 1-9)</span>
+                </button>
+                <button class="menu-btn level-btn pro" onclick="selectLevel('pro')">
+                    <span class="level-icon">⭐⭐⭐</span>
+                    <span class="level-name">Кәсіпқой</span>
+                    <span class="level-desc">Бүтін / Ондық (10-99 ÷ 2-10)</span>
+                </button>
+            </div>
+            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+        </div>
+    </div>
+
+    <!-- Game Screen - Tarik Tambang -->
+    <div id="gameScreenTarikTambang" class="game-container">
+        <!-- Bagian Pemain Kiri -->
+        <div class="player-section left-player">
+            <div class="question-box">1 + 8 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bagian Tengah -->
+        <div class="center-section">
+            <h1>Математикалық арқан тарту</h1>
+            <div class="game-field">
+                <div class="tug-of-war-scene"></div>
+                <div class="center-line"></div>
+            </div>
+            <p class="instruction">Арқанды тарту үшін есепті шығарыңыз!</p>
+        </div>
+
+        <!-- Bagian Pemain Kanan -->
+        <div class="player-section right-player">
+            <div class="question-box">9 + 4 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen - Panjat Pinang -->
+    <div id="gameScreenPanjatPinang" class="game-container panjat-pinang-game">
+        <!-- Bagian Pemain Kiri -->
+        <div class="player-section left-player">
+            <div class="question-box">1 + 8 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+            <div class="score-indicator">Дұрыс: <span class="score-value">0/7</span></div>
+        </div>
+
+        <!-- Bagian Tengah -->
+        <div class="center-section panjat-pinang-center">
+            <h1>Математикалық бағанаға өрмелеу</h1>
+            <div class="game-field panjat-pinang-field">
+                <!-- Tiang Kiri -->
+                <div class="pole-container left-pole">
+                    <img src="images/tiang.png" alt="Бағана" class="pole-image">
+                    <div class="climber-container left-climber">
+                        <img src="images/standleft.png" alt="Сол жақ ойыншы" class="climber-image stand">
+                        <img src="images/climbleft.png" alt="Сол жақ өрмелеуші ойыншы" class="climber-image climb" style="display: none;">
+                    </div>
+                </div>
+                
+                <!-- Tiang Kanan -->
+                <div class="pole-container right-pole">
+                    <img src="images/tiang.png" alt="Бағана" class="pole-image">
+                    <div class="climber-container right-climber">
+                        <img src="images/standright.png" alt="Оң жақ ойыншы" class="climber-image stand">
+                        <img src="images/climbright.png" alt="Оң жақ өрмелеуші ойыншы" class="climber-image climb" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            <p class="instruction">Бағанаға өрмелеу үшін есепті шығарыңыз! (Жеңіс үшін 7 дұрыс жауап)</p>
+        </div>
+
+        <!-- Bagian Pemain Kanan -->
+        <div class="player-section right-player">
+            <div class="question-box">9 + 4 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+            <div class="score-indicator">Дұрыс: <span class="score-value">0/7</span></div>
+        </div>
+    </div>
+
+    <!-- Game Screen - Balap Karung -->
+    <div id="gameScreenBalapKarung" class="game-container balap-karung-game">
+        <!-- Bagian Pemain Kiri -->
+        <div class="player-section left-player">
+            <div class="question-box">1 + 8 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+            <div class="score-indicator">Орын: <span class="score-value">0/10</span></div>
+        </div>
+
+        <!-- Bagian Tengah -->
+        <div class="center-section balap-karung-center">
+            <h1>Математикалық қаппен жарыс</h1>
+            <div class="game-field balap-karung-field">
+                <!-- Track -->
+                <div class="race-track">
+                    <img src="images/track.png" alt="Жүгіру жолы" class="track-image">
+                    
+                    <!-- Racer Kiri -->
+                    <div class="racer-container left-racer">
+                        <img src="images/blue_stand.png" alt="Сол жақ ойыншы" class="racer-image stand">
+                        <img src="images/blue_hop.png" alt="Сол жақ ойыншы секіруде" class="racer-image hop" style="display: none;">
+                    </div>
+                    
+                    <!-- Racer Kanan -->
+                    <div class="racer-container right-racer">
+                        <img src="images/red_stand.png" alt="Оң жақ ойыншы" class="racer-image stand">
+                        <img src="images/red_hop.png" alt="Оң жақ ойыншы секіруде" class="racer-image hop" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            <p class="instruction">Алға секіру үшін есепті шығарыңыз! (Жеңіс үшін 10 секіру)</p>
+        </div>
+
+        <!-- Bagian Pemain Kanan -->
+        <div class="player-section right-player">
+            <div class="question-box">9 + 4 = ?</div>
+            <div class="answer-box"></div>
+            <div class="keypad">
+                <div class="keypad-row">
+                    <button class="number-btn">1</button>
+                    <button class="number-btn">2</button>
+                    <button class="number-btn">3</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">4</button>
+                    <button class="number-btn">5</button>
+                    <button class="number-btn">6</button>
+                </div>
+                <div class="keypad-row">
+                    <button class="number-btn">7</button>
+                    <button class="number-btn">8</button>
+                    <button class="number-btn">9</button>
+                </div>
+                <div class="keypad-row keypad-row-4">
+                    <button class="minus-btn">−</button>
+                    <button class="decimal-btn">.</button>
+                    <button class="number-btn">0</button>
+                    <button class="clear-btn">C</button>
+                    <button class="go-btn">Go</button>
+                </div>
+                <div class="keypad-row keypad-row-5">
+                    <button class="go-btn-alt">Go</button>
+                </div>
+            </div>
+            <div class="score-indicator">Орын: <span class="score-value">0/10</span></div>
+        </div>
+    </div>
+
+    <!-- Modal Pemenang -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <h2 id="winnerText">🎉 Ойыншы жеңді! 🎉</h2>
+            <p id="winnerMessage">Құттықтаймыз! Сіз арқанды мәре сызығына дейін тарттыңыз!</p>
+            <button class="play-again-btn" onclick="closeModal()">Қайта ойнау</button>
+        </div>
+    </div>
+
+    <!-- Countdown Overlay -->
+    <div id="countdownOverlay" class="countdown-overlay">
+        <div class="countdown-content">
+            <div id="countdownNumber" class="countdown-number">3</div>
+            <div id="countdownText" class="countdown-text">Дайындал...</div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    
+    <!-- Register Service Worker for Caching & Auto-Update -->
+    <script>
+        // ============================================
+        // SERVICE WORKER REGISTRATION & AUTO-UPDATE
+        // ============================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered successfully:', registration.scope);
+                        
+                        // Cek update setiap 60 detik ketika tab aktif
+                        setInterval(() => {
+                            if (document.visibilityState === 'visible') {
+                                registration.update().then(() => {
+                                    console.log('🔄 Checked for updates');
+                                });
+                            }
+                        }, 60000); // 60 detik
+                        
+                        // Listener untuk service worker baru yang waiting
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Ada update baru - otomatis reload tanpa notifikasi
+                                    console.log('🆕 Update available! Auto-reloading in 2 seconds...');
+                                    setTimeout(() => {
+                                        window.location.reload(true);
+                                    }, 2000);
+                                }
+                            });
+                        });
+                    })
+                    .catch(error => {
+                        console.error('❌ Service Worker registration failed:', error);
+                    });
+                
+                // Listen untuk message dari Service Worker
+                navigator.serviceWorker.addEventListener('message', event => {
+                    if (event.data && event.data.type === 'CACHE_UPDATED') {
+                        console.log('📦 Cache updated:', event.data.version);
+                        console.log('💬 Message:', event.data.message);
+                    }
+                });
+            });
+        }
+    </script>
+
+
+</body></html>
