@@ -102,7 +102,7 @@ body.emotion-active #fullscreenBtn {
 .emotion-title {
     color: #ffffff;
     text-align: center;
-    font-size: clamp(1.05rem, 2.75vw, 2.6rem);
+    font-size: clamp(1rem, 2.25vw, 2.45rem);
     font-weight: 700;
     line-height: 1.15;
     margin: 0;
@@ -114,6 +114,156 @@ body.emotion-active #fullscreenBtn {
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+}
+
+/* Audio control pill */
+.emotion-audio-control {
+    height: 44px;
+    padding: 0 12px 0 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        0 4px 12px rgba(0, 0, 0, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.emotion-screen .emotion-audio-btn {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    min-height: 34px;
+    padding: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.emotion-screen .emotion-audio-btn .btn-icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.emotion-screen .emotion-audio-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.emotion-screen .emotion-audio-btn:active {
+    transform: scale(0.92);
+}
+
+.emotion-screen .audio-toggle-btn {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.emotion-screen .audio-toggle-btn.is-playing {
+    background: rgba(16, 185, 129, 0.32);
+    color: #6ee7b7;
+    box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.55);
+}
+
+.emotion-screen .audio-toggle-btn.is-playing:hover {
+    background: rgba(16, 185, 129, 0.45);
+    color: #a7f3d0;
+}
+
+.emotion-screen .audio-toggle-btn .icon-play {
+    display: block;
+    margin-left: 1px;
+}
+
+.emotion-screen .audio-toggle-btn .icon-pause {
+    display: none;
+}
+
+.emotion-screen .audio-toggle-btn.is-playing .icon-play {
+    display: none;
+}
+
+.emotion-screen .audio-toggle-btn.is-playing .icon-pause {
+    display: block;
+}
+
+.emotion-screen .audio-mute-btn .icon-vol-high,
+.emotion-screen .audio-mute-btn .icon-vol-low,
+.emotion-screen .audio-mute-btn .icon-vol-mute {
+    display: none;
+}
+
+.emotion-screen .audio-mute-btn.vol-high .icon-vol-high {
+    display: block;
+}
+
+.emotion-screen .audio-mute-btn.vol-low .icon-vol-low {
+    display: block;
+}
+
+.emotion-screen .audio-mute-btn.vol-mute {
+    color: #fca5a5;
+}
+
+.emotion-screen .audio-mute-btn.vol-mute .icon-vol-mute {
+    display: block;
+}
+
+.audio-volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: clamp(64px, 7vw, 94px);
+    height: 6px;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(90deg,
+            #34d399 0%,
+            #34d399 var(--vol-percent, 50%),
+            rgba(255, 255, 255, 0.24) var(--vol-percent, 50%),
+            rgba(255, 255, 255, 0.24) 100%);
+    transition: opacity 0.2s ease;
+}
+
+.audio-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #10b981;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.audio-volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.audio-volume-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #10b981;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.audio-volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
 }
 
 /* Explicit overrides against global `button` rules in css/styles.css */
@@ -135,7 +285,7 @@ body.emotion-active #fullscreenBtn {
     cursor: pointer;
     backdrop-filter: blur(10px);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
-                0 4px 12px rgba(0, 0, 0, 0.35);
+        0 4px 12px rgba(0, 0, 0, 0.35);
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
     white-space: nowrap;
 }
@@ -201,7 +351,7 @@ body.emotion-active #fullscreenBtn {
     color: #1e293b;
     border: 1px solid rgba(30, 41, 59, 0.12);
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     font-size: clamp(0.85rem, 1.5vw, 1.05rem);
     font-weight: 600;
 }
@@ -228,6 +378,7 @@ body.emotion-active #fullscreenBtn {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(-360deg);
     }
@@ -296,9 +447,11 @@ body.emotion-active #fullscreenBtn {
     0% {
         transform: scale(1);
     }
+
     40% {
         transform: scale(1.03);
     }
+
     100% {
         transform: scale(1);
     }
@@ -450,9 +603,11 @@ body.emotion-active #fullscreenBtn {
     0% {
         transform: scale(1);
     }
+
     45% {
         transform: scale(1.32);
     }
+
     100% {
         transform: scale(1);
     }
@@ -482,10 +637,12 @@ body.emotion-active #fullscreenBtn {
         opacity: 1;
         transform: translateY(0) scale(0.85);
     }
+
     30% {
         opacity: 1;
         transform: translateY(-18px) scale(1.1);
     }
+
     100% {
         opacity: 0;
         transform: translateY(-60px) scale(0.95);
@@ -498,16 +655,22 @@ body.emotion-active #fullscreenBtn {
 
 @media (max-width: 768px) and (orientation: portrait) {
     .emotion-header {
-        height: 58px;
-        grid-template-columns: 36px minmax(0, 1fr) auto;
-        padding: 0 8px;
-        gap: 6px;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 10px 10px;
+        row-gap: 8px;
+        column-gap: 6px;
     }
 
     .emotion-title {
+        order: -1;
+        flex: 1 0 100%;
         min-width: 0;
-        font-size: clamp(0.75rem, 3.1vw, 1.05rem);
-        line-height: 1.15;
+        font-size: clamp(0.92rem, 4.1vw, 1.18rem);
+        line-height: 1.2;
     }
 
     .emotion-screen .emotion-header-btn {
@@ -529,6 +692,28 @@ body.emotion-active #fullscreenBtn {
 
     .emotion-header-actions {
         gap: 6px;
+        margin-left: auto;
+    }
+
+    .emotion-audio-control {
+        height: 36px;
+        padding: 0 10px 0 3px;
+        gap: 4px;
+    }
+
+    .emotion-screen .emotion-audio-btn {
+        width: 28px;
+        height: 28px;
+        min-height: 28px;
+    }
+
+    .emotion-screen .emotion-audio-btn .btn-icon {
+        width: 15px;
+        height: 15px;
+    }
+
+    .audio-volume-slider {
+        width: 68px;
     }
 
     .emotion-stage {
@@ -592,6 +777,27 @@ body.emotion-active #fullscreenBtn {
     .emotion-screen .emotion-header-btn .btn-icon {
         width: 16px;
         height: 16px;
+    }
+
+    .emotion-audio-control {
+        height: 36px;
+        padding: 0 8px 0 3px;
+        gap: 4px;
+    }
+
+    .emotion-screen .emotion-audio-btn {
+        width: 28px;
+        height: 28px;
+        min-height: 28px;
+    }
+
+    .emotion-screen .emotion-audio-btn .btn-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .audio-volume-slider {
+        width: 56px;
     }
 
     .emotion-stage {

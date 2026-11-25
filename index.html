@@ -125,6 +125,7 @@
 
     <!-- Full-Screen 3-Emotions Screen -->
     <div id="emotionScreen" class="emotion-screen" aria-label="Эмоциялар экраны">
+        <audio id="emotionBgMusic" src="assets/Aibek_Bekbosyn_Sakarim_sanyragy_2018.mp3" loop preload="auto"></audio>
         <header class="emotion-header">
             <button type="button" class="emotion-header-btn emotion-back-btn" onclick="openAnimationsSection()" title="Анимацияларға оралу" aria-label="Артқа">
                 <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -135,6 +136,34 @@
             </button>
             <h1 id="emotionScreenTitle" class="emotion-title">Мәдени мұраны сақтаушы ұрпақпын</h1>
             <div class="emotion-header-actions">
+                <div class="emotion-audio-control" role="group" aria-label="Музыка басқару">
+                    <button type="button" id="bgMusicToggleBtn" class="emotion-audio-btn audio-toggle-btn" onclick="toggleBgMusic()" title="Музыканы тоқтату / қосу" aria-label="Музыканы тоқтату / қосу" aria-pressed="false">
+                        <svg class="btn-icon icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+                        </svg>
+                        <svg class="btn-icon icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                        </svg>
+                    </button>
+                    <button type="button" id="bgMusicMuteBtn" class="emotion-audio-btn audio-mute-btn vol-low" onclick="toggleBgMute()" title="Дыбысты өшіру / қосу" aria-label="Дыбысты өшіру / қосу">
+                        <svg class="btn-icon icon-vol-high" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                        <svg class="btn-icon icon-vol-low" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </svg>
+                        <svg class="btn-icon icon-vol-mute" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <line x1="22" y1="9" x2="16" y2="15"></line>
+                            <line x1="16" y1="9" x2="22" y2="15"></line>
+                        </svg>
+                    </button>
+                    <input type="range" id="bgMusicVolume" class="audio-volume-slider" min="0" max="100" value="50" step="1" aria-label="Дыбыс деңгейі" title="Дыбыс деңгейі">
+                </div>
                 <button type="button" class="emotion-header-btn emotion-fullscreen-btn" onclick="toggleFullscreen()" title="Толық экран режимі" aria-label="Толық экран">
                     <svg class="btn-icon fullscreen-icon expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>

@@ -15,6 +15,142 @@ const ANIMATIONS_CONFIG = [
 const emotionState = new Map();
 let emotionAudioCtx = null;
 
+const bgMusicState = {
+    volume: 0.5,
+    lastNonZeroVolume: 0.5,
+    muted: false,
+    userPaused: false
+};
+
+function getBgAudio() {
+    return document.getElementById('emotionBgMusic');
+}
+
+function updateAudioUI() {
+    const audio = getBgAudio();
+    const toggleBtn = document.getElementById('bgMusicToggleBtn');
+    const muteBtn = document.getElementById('bgMusicMuteBtn');
+    const volumeSlider = document.getElementById('bgMusicVolume');
+
+    const isPlaying = Boolean(audio && !audio.paused && !audio.ended);
+    if (toggleBtn) {
+        toggleBtn.classList.toggle('is-playing', isPlaying);
+        toggleBtn.setAttribute('aria-pressed', String(isPlaying));
+    }
+
+    const effectiveVol = bgMusicState.muted ? 0 : bgMusicState.volume;
+    if (muteBtn) {
+        muteBtn.classList.remove('vol-high', 'vol-low', 'vol-mute');
+        if (effectiveVol === 0) {
+            muteBtn.classList.add('vol-mute');
+        } else if (effectiveVol <= 0.5) {
+            muteBtn.classList.add('vol-low');
+        } else {
+            muteBtn.classList.add('vol-high');
+        }
+    }
+
+    if (volumeSlider) {
+        const sliderVal = Math.round(effectiveVol * 100);
+        volumeSlider.value = String(sliderVal);
+        volumeSlider.style.setProperty('--vol-percent', `${sliderVal}%`);
+    }
+}
+
+function startBgMusic(resetTime = false) {
+    const audio = getBgAudio();
+    if (!audio) return;
+
+    audio.volume = bgMusicState.muted ? 0 : bgMusicState.volume;
+    if (resetTime) {
+        audio.currentTime = 0;
+    }
+
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+        playPromise.then(() => updateAudioUI()).catch(() => updateAudioUI());
+    } else {
+        updateAudioUI();
+    }
+}
+
+function pauseBgMusic() {
+    const audio = getBgAudio();
+    if (!audio) return;
+    if (!audio.paused) {
+        audio.pause();
+    }
+    updateAudioUI();
+}
+
+function toggleBgMusic() {
+    const audio = getBgAudio();
+    if (!audio) return;
+
+    if (audio.paused) {
+        bgMusicState.userPaused = false;
+        startBgMusic(false);
+    } else {
+        bgMusicState.userPaused = true;
+        pauseBgMusic();
+    }
+}
+
+function toggleBgMute() {
+    const audio = getBgAudio();
+    if (bgMusicState.muted || bgMusicState.volume === 0) {
+        bgMusicState.muted = false;
+        if (bgMusicState.volume === 0) {
+            bgMusicState.volume = bgMusicState.lastNonZeroVolume || 0.5;
+        }
+    } else {
+        bgMusicState.muted = true;
+    }
+
+    if (audio) {
+        audio.volume = bgMusicState.muted ? 0 : bgMusicState.volume;
+    }
+    updateAudioUI();
+}
+
+function setBgVolume(percent) {
+    const clamped = Math.max(0, Math.min(100, Number(percent) || 0));
+    const vol = clamped / 100;
+
+    if (vol === 0) {
+        bgMusicState.muted = true;
+        bgMusicState.volume = 0;
+    } else {
+        bgMusicState.muted = false;
+        bgMusicState.volume = vol;
+        bgMusicState.lastNonZeroVolume = vol;
+    }
+
+    const audio = getBgAudio();
+    if (audio) {
+        audio.volume = bgMusicState.muted ? 0 : bgMusicState.volume;
+    }
+    updateAudioUI();
+}
+
+function initBgMusicControls() {
+    const volumeSlider = document.getElementById('bgMusicVolume');
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', (e) => {
+            setBgVolume(e.target.value);
+        });
+    }
+
+    const audio = getBgAudio();
+    if (audio) {
+        audio.volume = bgMusicState.muted ? 0 : bgMusicState.volume;
+        audio.addEventListener('play', updateAudioUI);
+        audio.addEventListener('pause', updateAudioUI);
+        audio.addEventListener('ended', updateAudioUI);
+    }
+    updateAudioUI();
+}
+
 // Render animation buttons dynamically so new animations can be added via ANIMATIONS_CONFIG
 function renderAnimationsMenu() {
     const listEl = document.getElementById('animationsList');
@@ -74,6 +210,7 @@ function hideAllGameScreens() {
 }
 
 function showMainHubMenu() {
+    pauseBgMusic();
     stopAllEmotions();
     hideAllGameScreens();
 
@@ -89,6 +226,7 @@ function showMainHubMenu() {
 }
 
 function openGamesSection() {
+    pauseBgMusic();
     stopAllEmotions();
     const mainHubMenu = document.getElementById('mainHubMenu');
     const animationsMenu = document.getElementById('animationsMenu');
@@ -105,6 +243,7 @@ function openGamesSection() {
 }
 
 function openAnimationsSection() {
+    pauseBgMusic();
     stopAllEmotions();
     hideAllGameScreens();
 
@@ -134,6 +273,8 @@ function openEmotionScreen() {
 
     document.body.classList.add('emotion-active');
     ensureEmotionStillsDrawn();
+    bgMusicState.userPaused = false;
+    startBgMusic(true);
 }
 
 function goToMainHub() {
@@ -169,6 +310,8 @@ function ensureEmotionStillsDrawn() {
 }
 
 function playEmotionSound(emotionType) {
+    if (bgMusicState.muted || bgMusicState.volume === 0) return;
+
     try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
@@ -186,6 +329,7 @@ function playEmotionSound(emotionType) {
         };
         const notes = tones[emotionType] || [523.25];
         const now = emotionAudioCtx.currentTime;
+        const peakGain = 0.08 * Math.max(0.25, bgMusicState.volume);
 
         notes.forEach((freq, idx) => {
             const osc = emotionAudioCtx.createOscillator();
@@ -193,7 +337,7 @@ function playEmotionSound(emotionType) {
             osc.type = 'sine';
             osc.frequency.setValueAtTime(freq, now + idx * 0.08);
             gain.gain.setValueAtTime(0.001, now + idx * 0.08);
-            gain.gain.exponentialRampToValueAtTime(0.08, now + idx * 0.08 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(peakGain, now + idx * 0.08 + 0.02);
             gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.18);
             osc.connect(gain);
             gain.connect(emotionAudioCtx.destination);
@@ -334,7 +478,7 @@ function initEmotionCards() {
                 .then(blob => {
                     if (blob) state.gifBlob = blob;
                 })
-                .catch(() => {});
+                .catch(() => { });
         }
 
         card.addEventListener('click', () => triggerEmotion(card));
@@ -343,4 +487,5 @@ function initEmotionCards() {
 
 renderAnimationsMenu();
 initEmotionCards();
+initBgMusicControls();
 showMainHubMenu();

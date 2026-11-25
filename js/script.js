@@ -920,6 +920,9 @@ setupEventListeners('gameScreenPanjatPinang');
 setupEventListeners('gameScreenBalapKarung');
 
 function hideHubAndAnimationScreens() {
+    if (typeof pauseBgMusic === 'function') {
+        pauseBgMusic();
+    }
     const mainHubMenu = document.getElementById('mainHubMenu');
     const animationsMenu = document.getElementById('animationsMenu');
     const emotionScreen = document.getElementById('emotionScreen');
