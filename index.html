@@ -6,11 +6,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#a8d8ff">
     <meta name="format-detection" content="telephone=no">
-    <title>Математика ойыны</title>
+    <title>Мәдени мұра және Математика ойыны</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/emotions.css">
     
     <!-- Preload critical images -->
+    <link rel="preload" as="image" href="images/animation/Gemini_Generated_Gif_4ma0ue4ma0ue4ma0.gif">
+    <link rel="preload" as="image" href="images/animation/Gemini_Generated_Gif_6jp2kw6jp2kw6jp2.gif">
+    <link rel="preload" as="image" href="images/animation/Gemini_Generated_Gif_qebw42qebw42qebw.gif">
     <link rel="preload" as="image" href="images/character.png">
     <link rel="preload" as="image" href="images/icon_home.png">
     <link rel="preload" as="image" href="images/icon_tarik.png">
@@ -39,9 +43,37 @@
     </button>
 
     <!-- Home Button -->
-    <button id="homeBtn" class="home-btn" onclick="backToGameTypeMenu()" title="Басты мәзір">
+    <button id="homeBtn" class="home-btn" onclick="goToMainHub()" title="Басты мәзір">
         <img src="images/icon_home.png" alt="Home" class="home-icon">
     </button>
+
+    <!-- Main Hub Menu (Games / Animations) -->
+    <div id="mainHubMenu" class="menu-screen">
+        <div class="menu-container hub-menu-container">
+            <h1 class="menu-title">Басты мәзір</h1>
+            <p class="menu-subtitle">Бөлімді таңдаңыз</p>
+            <div class="menu-buttons hub-menu-buttons">
+                <button class="menu-btn game-type-btn hub-section-btn hub-games-btn" onclick="openGamesSection()">
+                    <img src="images/icon_tarik.png" alt="Ойындар" class="menu-icon">
+                    <div class="game-type-text">
+                        <span class="game-type-title">Ойындар</span>
+                        <span class="game-type-subtitle">Арқан тарту • Бағанаға өрмелеу • Қаппен жарыс</span>
+                    </div>
+                </button>
+                <button class="menu-btn game-type-btn hub-section-btn hub-animations-btn" onclick="openAnimationsSection()">
+                    <img src="images/animation/Gemini_Generated_Gif_4ma0ue4ma0ue4ma0.gif" alt="Анимациялар" class="menu-icon hub-anim-thumb">
+                    <div class="game-type-text">
+                        <span class="game-type-title">Анимациялар</span>
+                        <span class="game-type-subtitle">Мәдени мұраны сақтаушы ұрпақпын</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="copyright-footer">
+            <p>© AfifEdu 2025 | <span id="version-indicator">v2.0.0</span></p>
+            <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">Created By Herwin Hamid</p>
+        </div>
+    </div>
 
     <!-- Menu Game Mode Selection (Tarik Tambang / Panjat Pinang) -->
     <div id="gameTypeMenu" class="menu-screen">
@@ -65,11 +97,103 @@
                     <span>Қаппен жарыс</span>
                 </button>
             </div>
+            <button class="back-btn" onclick="showMainHubMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
-        <div class="copyright-footer">
-            <p>© AfifEdu 2025 | <span id="version-indicator">v2.0.0</span></p>
-            <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">Created By Herwin Hamid</p>
+    </div>
+
+    <!-- Animations Section Menu -->
+    <div id="animationsMenu" class="menu-screen">
+        <div class="menu-container animations-menu-container">
+            <h1 class="menu-title">Анимациялар</h1>
+            <p class="menu-subtitle">Анимацияны таңдаңыз</p>
+            <div id="animationsList" class="menu-buttons"></div>
+            <button class="back-btn" onclick="showMainHubMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
+    </div>
+
+    <!-- Full-Screen 3-Emotions Screen -->
+    <div id="emotionScreen" class="emotion-screen" aria-label="Эмоциялар экраны">
+        <header class="emotion-header">
+            <button type="button" class="emotion-header-btn emotion-back-btn" onclick="openAnimationsSection()" title="Анимацияларға оралу" aria-label="Артқа">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span class="btn-label">Артқа</span>
+            </button>
+            <h1 id="emotionScreenTitle" class="emotion-title">Мәдени мұраны сақтаушы ұрпақпын</h1>
+            <div class="emotion-header-actions">
+                <button type="button" class="emotion-header-btn emotion-fullscreen-btn" onclick="toggleFullscreen()" title="Толық экран режимі" aria-label="Толық экран">
+                    <svg class="btn-icon fullscreen-icon expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                    </svg>
+                    <svg class="btn-icon fullscreen-icon collapse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                    </svg>
+                </button>
+                <button type="button" class="emotion-header-btn emotion-reset-btn" onclick="resetEmotionCounters()" title="Есептегішті нөлдеу" aria-label="Нөлдеу">
+                    <svg class="btn-icon reset-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                    <span class="btn-label">Нөлдеу</span>
+                </button>
+            </div>
+        </header>
+        <main class="emotion-stage">
+            <div id="emotionGrid" class="emotion-grid">
+                <button type="button" class="emotion-card emotion-green" data-emotion="understood" data-gif="images/animation/Gemini_Generated_Gif_4ma0ue4ma0ue4ma0.gif" data-duration="3000" aria-label="Барлығы түсінікті">
+                    <div class="emotion-frame">
+                        <div class="emotion-media">
+                            <canvas class="emotion-still" width="360" height="640"></canvas>
+                            <img class="emotion-gif" alt="Барлығы түсінікті" draggable="false">
+                        </div>
+                    </div>
+                    <div class="emotion-footer">
+                        <span class="emotion-pill">Барлығы түсінікті</span>
+                        <span class="emotion-counter" aria-live="polite">0</span>
+                    </div>
+                </button>
+
+                <button type="button" class="emotion-card emotion-yellow" data-emotion="questions" data-gif="images/animation/Gemini_Generated_Gif_6jp2kw6jp2kw6jp2.gif" data-duration="3000" aria-label="Сұрақтарым бар">
+                    <div class="emotion-frame">
+                        <div class="emotion-media">
+                            <canvas class="emotion-still" width="360" height="640"></canvas>
+                            <img class="emotion-gif" alt="Сұрақтарым бар" draggable="false">
+                        </div>
+                    </div>
+                    <div class="emotion-footer">
+                        <span class="emotion-pill">Сұрақтарым бар</span>
+                        <span class="emotion-counter" aria-live="polite">0</span>
+                    </div>
+                </button>
+
+                <button type="button" class="emotion-card emotion-red" data-emotion="not-understood" data-gif="images/animation/Gemini_Generated_Gif_qebw42qebw42qebw.gif" data-duration="3000" aria-label="Түсініксіз">
+                    <div class="emotion-frame">
+                        <div class="emotion-media">
+                            <canvas class="emotion-still" width="360" height="640"></canvas>
+                            <img class="emotion-gif" alt="Түсініксіз" draggable="false">
+                        </div>
+                    </div>
+                    <div class="emotion-footer">
+                        <span class="emotion-pill">Түсініксіз</span>
+                        <span class="emotion-counter" aria-live="polite">0</span>
+                    </div>
+                </button>
+            </div>
+        </main>
     </div>
 
     <!-- Menu Math Mode Selection for Tarik Tambang -->
@@ -91,7 +215,13 @@
                     ➗ Бөлу
                 </button>
             </div>
-            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToGameTypeMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -114,7 +244,13 @@
                     ➗ Бөлу
                 </button>
             </div>
-            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToGameTypeMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -137,7 +273,13 @@
                     ➗ Бөлу
                 </button>
             </div>
-            <button class="back-btn" onclick="backToGameTypeMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToGameTypeMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -163,7 +305,13 @@
                     <span class="level-desc">2 таңбалы + 2 таңбалы</span>
                 </button>
             </div>
-            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToMainMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -189,7 +337,13 @@
                     <span class="level-desc">2 таңбалы - 2 таңбалы</span>
                 </button>
             </div>
-            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToMainMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -215,7 +369,13 @@
                     <span class="level-desc">2 таңбалы × 2 таңбалы</span>
                 </button>
             </div>
-            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToMainMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -241,7 +401,13 @@
                     <span class="level-desc">Бүтін / Ондық (10-99 ÷ 2-10)</span>
                 </button>
             </div>
-            <button class="back-btn" onclick="backToMainMenu()">← Артқа</button>
+            <button class="back-btn" onclick="backToMainMenu()">
+                <svg class="back-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                <span>Артқа</span>
+            </button>
         </div>
     </div>
 
@@ -533,6 +699,7 @@
     </div>
 
     <script src="js/script.js"></script>
+    <script src="js/emotions.js"></script>
     
     <!-- Register Service Worker for Caching & Auto-Update -->
     <script>

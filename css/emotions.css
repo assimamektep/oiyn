@@ -1,0 +1,627 @@
+/* ============================================ */
+/* HUB MENU, ANIMATIONS MENU & EMOTION SCREEN   */
+/* ============================================ */
+
+/* Hub & Animations menu containers */
+#mainHubMenu .menu-container,
+#animationsMenu .menu-container {
+    justify-content: center;
+}
+
+.hub-menu-container,
+.animations-menu-container {
+    gap: clamp(8px, 1.4vh, 18px);
+}
+
+.hub-section-btn {
+    color: #ffffff;
+}
+
+.hub-games-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.hub-games-btn:hover {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.hub-animations-btn {
+    background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+}
+
+.hub-animations-btn:hover {
+    background: linear-gradient(135deg, #38bdf8 0%, #34d399 100%);
+}
+
+.hub-section-btn .game-type-title,
+.animation-item-btn .game-type-title {
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.hub-section-btn .game-type-subtitle,
+.animation-item-btn .game-type-subtitle {
+    white-space: normal;
+    line-height: 1.25;
+    font-size: clamp(0.68rem, 1.15vw, 0.92rem) !important;
+    opacity: 0.92;
+}
+
+.hub-anim-thumb {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 4px;
+    object-fit: contain !important;
+}
+
+.animation-item-btn {
+    background: linear-gradient(135deg, #1d4ed8 0%, #0f766e 100%);
+}
+
+.animation-item-btn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #0d9488 100%);
+}
+
+/* ============================================ */
+/* FULL-SCREEN EMOTION FEEDBACK SCREEN          */
+/* ============================================ */
+
+.emotion-screen {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    width: 100dvw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 200;
+    background: #000000;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Hide floating fullscreen button while emotion screen's integrated header button is visible */
+body.emotion-active #fullscreenBtn {
+    display: none !important;
+}
+
+/* Header */
+.emotion-header {
+    background: #000000;
+    height: clamp(66px, 11vh, 110px);
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 0 clamp(14px, 2.5vw, 36px);
+    gap: clamp(10px, 1.5vw, 20px);
+    box-sizing: border-box;
+}
+
+.emotion-title {
+    color: #ffffff;
+    text-align: center;
+    font-size: clamp(1.05rem, 2.75vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.emotion-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Explicit overrides against global `button` rules in css/styles.css */
+.emotion-screen .emotion-header-btn {
+    flex: none;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                0 4px 12px rgba(0, 0, 0, 0.35);
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.emotion-screen .emotion-header-btn .btn-icon {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.emotion-screen .emotion-header-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.42);
+    transform: translateY(-1px);
+}
+
+.emotion-screen .emotion-back-btn:hover .btn-icon {
+    transform: translateX(-2px);
+}
+
+.emotion-screen .emotion-fullscreen-btn {
+    width: 44px;
+    padding: 0;
+}
+
+.emotion-screen .emotion-fullscreen-btn .fullscreen-icon {
+    color: currentColor;
+}
+
+.emotion-screen .emotion-reset-btn {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(248, 113, 113, 0.45);
+    color: #fecaca;
+}
+
+.emotion-screen .emotion-reset-btn:hover {
+    background: rgba(239, 68, 68, 0.34);
+    border-color: rgba(248, 113, 113, 0.75);
+    color: #ffffff;
+}
+
+.emotion-screen .emotion-header-btn:active {
+    transform: scale(0.95);
+}
+
+.emotion-screen .emotion-reset-btn.spinning .reset-icon {
+    animation: emotionResetSpin 0.45s ease-out;
+}
+
+/* Polished Menu Back Pill Button */
+.menu-container .back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: center;
+    flex: none;
+    height: auto;
+    padding: clamp(10px, 1.4vh, 14px) clamp(20px, 2.6vw, 30px);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #1e293b;
+    border: 1px solid rgba(30, 41, 59, 0.12);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+    font-weight: 600;
+}
+
+.menu-container .back-btn .back-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.menu-container .back-btn:hover {
+    background: #ffffff;
+    color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
+}
+
+.menu-container .back-btn:hover .back-icon {
+    transform: translateX(-3px);
+}
+
+@keyframes emotionResetSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+/* White Stage */
+.emotion-stage {
+    flex: 1;
+    min-height: 0;
+    background: #ffffff;
+    margin: 0 clamp(10px, 1.8vw, 28px) clamp(10px, 1.8vh, 24px);
+    border-radius: clamp(8px, 1vw, 18px);
+    padding: clamp(14px, 2.4vh, 32px) clamp(14px, 2.2vw, 32px) clamp(18px, 3vh, 34px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.emotion-grid {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(12px, 2vw, 28px);
+    align-items: stretch;
+}
+
+/* Emotion Card Button */
+.emotion-screen .emotion-card {
+    flex: none;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.emotion-screen .emotion-card:hover {
+    transform: translateY(-4px);
+}
+
+.emotion-screen .emotion-card:active {
+    transform: scale(0.97);
+}
+
+.emotion-screen .emotion-card.is-playing {
+    animation: emotionCardPulse 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes emotionCardPulse {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.03);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Color Themes */
+.emotion-green {
+    --card-bg: #389844;
+    --pill-bg: #4caf50;
+    --pill-border: #256d2c;
+    --pill-text: #111111;
+    --glow: rgba(76, 175, 80, 0.55);
+}
+
+.emotion-yellow {
+    --card-bg: #ffc61a;
+    --pill-bg: #ffeb3b;
+    --pill-border: #c99a00;
+    --pill-text: #111111;
+    --glow: rgba(255, 198, 26, 0.6);
+}
+
+.emotion-red {
+    --card-bg: #e53925;
+    --pill-bg: #ff2b1c;
+    --pill-border: #9e150c;
+    --pill-text: #ffffff;
+    --glow: rgba(229, 57, 37, 0.55);
+}
+
+/* Colored Frame */
+.emotion-frame {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    position: relative;
+    background-color: var(--card-bg);
+    border: 3px solid #1a1a1a;
+    border-radius: 14px;
+    padding: clamp(10px, 1.6vw, 20px);
+    padding-bottom: clamp(22px, 3vh, 36px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: box-shadow 0.25s ease;
+}
+
+.emotion-screen .emotion-card.is-playing .emotion-frame {
+    box-shadow: 0 0 0 4px var(--glow), 0 14px 32px var(--glow);
+}
+
+/* White Inner Portrait Box for GIF */
+.emotion-media {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+.emotion-still,
+.emotion-gif {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.emotion-still {
+    opacity: 1;
+    transition: opacity 0.12s ease;
+}
+
+.emotion-gif {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.emotion-screen .emotion-card.is-playing .emotion-still {
+    opacity: 0;
+}
+
+.emotion-screen .emotion-card.is-playing .emotion-gif {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Bottom Pill + Counter Badge */
+.emotion-footer {
+    position: relative;
+    margin-top: calc(-1 * clamp(18px, 2.6vh, 30px));
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(8px, 1vw, 14px);
+    width: 92%;
+    max-width: 420px;
+}
+
+.emotion-pill {
+    flex: 1;
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    border: 2px solid var(--pill-border);
+    border-radius: 999px;
+    padding: clamp(8px, 1.3vh, 16px) clamp(12px, 1.8vw, 24px);
+    font-size: clamp(0.85rem, 1.65vw, 1.45rem);
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.emotion-counter {
+    flex-shrink: 0;
+    min-width: clamp(42px, 4.8vw, 68px);
+    height: clamp(42px, 4.8vw, 68px);
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    border: 2px solid var(--pill-border);
+    font-size: clamp(1rem, 1.9vw, 1.65rem);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.emotion-counter.pop {
+    animation: counterPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes counterPop {
+    0% {
+        transform: scale(1);
+    }
+    45% {
+        transform: scale(1.32);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Floating +1 indicator */
+.emotion-plus-one {
+    position: absolute;
+    right: clamp(8px, 1.2vw, 16px);
+    bottom: 100%;
+    margin-bottom: 4px;
+    font-size: clamp(1rem, 1.8vw, 1.5rem);
+    font-weight: 800;
+    color: var(--pill-text);
+    background: var(--pill-bg);
+    border: 2px solid var(--pill-border);
+    border-radius: 999px;
+    padding: 2px 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 20;
+    animation: floatPlusOne 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes floatPlusOne {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(0.85);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-18px) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.95);
+    }
+}
+
+/* ============================================ */
+/* RESPONSIVE ADJUSTMENTS FOR EMOTION SCREEN    */
+/* ============================================ */
+
+@media (max-width: 768px) and (orientation: portrait) {
+    .emotion-header {
+        height: 58px;
+        grid-template-columns: 36px minmax(0, 1fr) auto;
+        padding: 0 8px;
+        gap: 6px;
+    }
+
+    .emotion-title {
+        min-width: 0;
+        font-size: clamp(0.75rem, 3.1vw, 1.05rem);
+        line-height: 1.15;
+    }
+
+    .emotion-screen .emotion-header-btn {
+        width: 36px;
+        height: 36px;
+        min-height: 36px;
+        padding: 0;
+        border-radius: 999px;
+    }
+
+    .emotion-screen .emotion-header-btn .btn-label {
+        display: none;
+    }
+
+    .emotion-screen .emotion-header-btn .btn-icon {
+        width: 17px;
+        height: 17px;
+    }
+
+    .emotion-header-actions {
+        gap: 6px;
+    }
+
+    .emotion-stage {
+        margin: 0 8px 8px;
+        padding: 10px;
+    }
+
+    .emotion-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .emotion-frame {
+        padding: 8px;
+        padding-bottom: 18px;
+        border-width: 2px;
+    }
+
+    .emotion-footer {
+        margin-top: -16px;
+        width: 90%;
+    }
+
+    .emotion-pill {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+
+    .emotion-counter {
+        min-width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .emotion-header {
+        height: 48px;
+        grid-template-columns: auto 1fr auto;
+        padding: 0 12px;
+    }
+
+    .emotion-title {
+        font-size: clamp(0.9rem, 2.3vw, 1.3rem);
+    }
+
+    .emotion-screen .emotion-header-btn {
+        height: 36px;
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 0.82rem;
+        gap: 6px;
+    }
+
+    .emotion-screen .emotion-fullscreen-btn {
+        width: 36px;
+        padding: 0;
+    }
+
+    .emotion-screen .emotion-header-btn .btn-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .emotion-stage {
+        margin: 0 8px 8px;
+        padding: 8px 12px 12px;
+    }
+
+    .emotion-grid {
+        gap: 10px;
+    }
+
+    .emotion-frame {
+        padding: 6px;
+        padding-bottom: 16px;
+        border-width: 2px;
+    }
+
+    .emotion-footer {
+        margin-top: -15px;
+        gap: 6px;
+    }
+
+    .emotion-pill {
+        padding: 5px 10px;
+        font-size: 0.78rem;
+    }
+
+    .emotion-counter {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}

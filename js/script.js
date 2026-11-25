@@ -919,8 +919,19 @@ setupEventListeners('gameScreenTarikTambang');
 setupEventListeners('gameScreenPanjatPinang');
 setupEventListeners('gameScreenBalapKarung');
 
+function hideHubAndAnimationScreens() {
+    const mainHubMenu = document.getElementById('mainHubMenu');
+    const animationsMenu = document.getElementById('animationsMenu');
+    const emotionScreen = document.getElementById('emotionScreen');
+    if (mainHubMenu) mainHubMenu.style.display = 'none';
+    if (animationsMenu) animationsMenu.style.display = 'none';
+    if (emotionScreen) emotionScreen.style.display = 'none';
+    document.body.classList.remove('emotion-active');
+}
+
 // Fungsi untuk menampilkan menu game type (Tarik Tambang / Panjat Pinang / Balap Karung)
 function showGameTypeMenu() {
+    hideHubAndAnimationScreens();
     document.getElementById('gameTypeMenu').style.display = 'flex';
     document.getElementById('mathModeMenuTarikTambang').style.display = 'none';
     document.getElementById('mathModeMenuPanjatPinang').style.display = 'none';
@@ -950,6 +961,7 @@ function selectGameType(gameType) {
 
 // Fungsi untuk menampilkan menu math mode
 function showMathModeMenu(gameType) {
+    hideHubAndAnimationScreens();
     document.getElementById('gameTypeMenu').style.display = 'none';
     document.getElementById('levelMenuAddition').style.display = 'none';
     document.getElementById('levelMenuSubtraction').style.display = 'none';
@@ -992,6 +1004,7 @@ function selectMathMode(mode) {
 
 // Fungsi untuk menampilkan menu level
 function showLevelMenu(mode) {
+    hideHubAndAnimationScreens();
     document.getElementById('gameTypeMenu').style.display = 'none';
     document.getElementById('mathModeMenuTarikTambang').style.display = 'none';
     document.getElementById('mathModeMenuPanjatPinang').style.display = 'none';
@@ -1094,6 +1107,7 @@ function showCountdown() {
 
 // Fungsi untuk memulai game
 function startGame() {
+    hideHubAndAnimationScreens();
     document.getElementById('gameTypeMenu').style.display = 'none';
     document.getElementById('mathModeMenuTarikTambang').style.display = 'none';
     document.getElementById('mathModeMenuPanjatPinang').style.display = 'none';
@@ -1179,8 +1193,7 @@ function backToMainMenu() {
     showMathModeMenu(gameState.currentGameType);
 }
 
-// Initialize - tampilkan menu game type
-showGameTypeMenu();
+// Initial screen is controlled by js/emotions.js (showMainHubMenu)
 
 // ============================================
 // FIT TO SCREEN HANDLING - IMPROVED
@@ -1189,6 +1202,9 @@ showGameTypeMenu();
 // Prevent zoom on double-tap (mobile) - only register once
 let lastTouchEnd = 0;
 document.addEventListener('touchend', (event) => {
+    if (event.target && event.target.closest('.emotion-card')) {
+        return;
+    }
     const now = Date.now();
     if (now - lastTouchEnd <= 300) {
         event.preventDefault();
