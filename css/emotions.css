@@ -125,7 +125,7 @@ body.emotion-active #fullscreenBtn {
     border: 1px solid rgba(255, 255, 255, 0.22);
     backdrop-filter: blur(10px);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        0 4px 12px rgba(0, 0, 0, 0.35);
+                0 4px 12px rgba(0, 0, 0, 0.35);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -226,11 +226,13 @@ body.emotion-active #fullscreenBtn {
     border-radius: 999px;
     outline: none;
     cursor: pointer;
-    background: linear-gradient(90deg,
-            #34d399 0%,
-            #34d399 var(--vol-percent, 50%),
-            rgba(255, 255, 255, 0.24) var(--vol-percent, 50%),
-            rgba(255, 255, 255, 0.24) 100%);
+    background: linear-gradient(
+        90deg,
+        #34d399 0%,
+        #34d399 var(--vol-percent, 50%),
+        rgba(255, 255, 255, 0.24) var(--vol-percent, 50%),
+        rgba(255, 255, 255, 0.24) 100%
+    );
     transition: opacity 0.2s ease;
 }
 
@@ -285,7 +287,7 @@ body.emotion-active #fullscreenBtn {
     cursor: pointer;
     backdrop-filter: blur(10px);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16),
-        0 4px 12px rgba(0, 0, 0, 0.35);
+                0 4px 12px rgba(0, 0, 0, 0.35);
     transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
     white-space: nowrap;
 }
@@ -351,7 +353,7 @@ body.emotion-active #fullscreenBtn {
     color: #1e293b;
     border: 1px solid rgba(30, 41, 59, 0.12);
     box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
     font-size: clamp(0.85rem, 1.5vw, 1.05rem);
     font-weight: 600;
 }
@@ -378,7 +380,6 @@ body.emotion-active #fullscreenBtn {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(-360deg);
     }
@@ -447,11 +448,9 @@ body.emotion-active #fullscreenBtn {
     0% {
         transform: scale(1);
     }
-
     40% {
         transform: scale(1.03);
     }
-
     100% {
         transform: scale(1);
     }
@@ -603,11 +602,9 @@ body.emotion-active #fullscreenBtn {
     0% {
         transform: scale(1);
     }
-
     45% {
         transform: scale(1.32);
     }
-
     100% {
         transform: scale(1);
     }
@@ -637,12 +634,10 @@ body.emotion-active #fullscreenBtn {
         opacity: 1;
         transform: translateY(0) scale(0.85);
     }
-
     30% {
         opacity: 1;
         transform: translateY(-18px) scale(1.1);
     }
-
     100% {
         opacity: 0;
         transform: translateY(-60px) scale(0.95);

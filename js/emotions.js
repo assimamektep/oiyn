@@ -478,7 +478,7 @@ function initEmotionCards() {
                 .then(blob => {
                     if (blob) state.gifBlob = blob;
                 })
-                .catch(() => { });
+                .catch(() => {});
         }
 
         card.addEventListener('click', () => triggerEmotion(card));
